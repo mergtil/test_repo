@@ -4,13 +4,8 @@ name: Queue After CI
 
 # Controls when the workflow will run
 on:
-  pull_request:
-    branches: [ "master" ]
   merge_group:
     types: [checks_requested]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
   
 concurrency: 
   group: ${{ github.event.pull_request.head.repo.full_name}}/${{ github.event.pull_request.head.ref }}/${{ github.workflow }}
@@ -33,9 +28,9 @@ jobs:
           # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
         with: |
-          fetch-depth: 3
-          repository: matrixorigin/matrixone
-          ref: main
+          fetch-depth: "3"
+          repository: "matrixorigin/matrixone"
+          ref: "main"
           path: ./matrixone
 
       # Runs a single command using the runners shell
