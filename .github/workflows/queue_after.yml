@@ -4,6 +4,8 @@ name: Queue After CI
 
 # Controls when the workflow will run
 on:
+  pull_request:
+    branches: [master]
   merge_group:
     types: [checks_requested]
   
@@ -27,7 +29,7 @@ jobs:
           cache: true
           # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-        with: |
+        with:
           fetch-depth: "3"
           repository: "matrixorigin/matrixone"
           ref: "main"
