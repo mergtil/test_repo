@@ -4,6 +4,8 @@ name: Queue After CI
 
 # Controls when the workflow will run
 on:
+  pull_request:
+    branches: [master]
   merge_group:
     types: [checks_requested]
   
@@ -24,10 +26,9 @@ jobs:
         with:
           go-version: '1.20'
           check-latest: true
-          cache: true
           # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-        with: |
+        with:
           fetch-depth: "3"
           repository: "matrixorigin/matrixone"
           ref: "main"
@@ -40,7 +41,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          cd $GITHUB_WORKSPACE/matrixorigin
+          cd $GITHUB_WORKSPACE/matrixone
           make clean && make config && make cgo
           echo "test_scope=$(go list ./... | grep -v 'driver\|engine/aoe\|engine/memEngine\|pkg/catalog' | xargs)" >> $GITHUB_ENV
           echo "raw_ut_coverage='ut_coverage.raw'" >> $GITHUB_ENV
